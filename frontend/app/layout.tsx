@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Agile Leaders Discussion",
-  description: "アジャイル・リーダーズ・ディスカッション",
+  title: "デモアプリ",
+  description: "マルチエージェントがパネルディスカッションします",
 };
 
 export default function RootLayout({
