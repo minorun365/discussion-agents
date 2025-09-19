@@ -1,11 +1,16 @@
 # パネルディスカッション・エージェント
 
-ローカル起動コマンド
+## ローカル起動コマンド
+
+バックエンド
 
 ```sh
-cd backend
-uvicorn api:app --reload
+export AWS_PROFILE=<プロファイル名>
+cd backend && uvicorn api:app --reload
+```
 
-cd frontend
-npm run dev
+フロントエンド
+
+```sh
+cd frontend && npm run dev
 ```
