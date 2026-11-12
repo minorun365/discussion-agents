@@ -21,3 +21,7 @@ cd frontend && npm run dev
 ```
 
 AWS に載せる手順は [デプロイガイド](DEPLOY_GUIDE.md) にあります。
+
+## ライセンス
+
+MIT Licenseです。詳細は [LICENSE](./LICENSE) を参照してください。
