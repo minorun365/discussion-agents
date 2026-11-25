@@ -1,19 +1,19 @@
 # AIディスカッションエージェント デプロイガイド
 
-このガイドでは、本アプリケーションをAWS Amplify Gen2（フロントエンド）とAmazon Bedrock AgentCore Runtime（バックエンド）にデプロイする手順を説明します。
+このガイドでは、本アプリケーションのフロントエンドをAWS Amplify Gen2、バックエンドをAmazon Bedrock AgentCore Runtimeにデプロイする手順を説明します。
 
 ## 前提条件
 
 ### 必要なツールとサービス
 - AWSアカウント
-- AWS CLI（設定済み）
+- 設定済みのAWS CLI
 - Node.js 18以上
 - Python 3.10以上
-- Docker Desktop（ARM64ビルド対応）
+- ARM64ビルド対応のDocker Desktop
 - Git
 
 ### AWSアクセス権限
-以下のサービスへのアクセス権限が必要です：
+以下のサービスへのアクセス権限が必要です。
 - AWS Amplify
 - Amazon Bedrock（Claude モデルへのアクセス権限）
 - Amazon ECR（Elastic Container Registry）
@@ -21,7 +21,7 @@
 - Amazon CloudWatch Logs
 
 ### Bedrockモデルアクセス
-Amazon Bedrockコンソールで以下のモデルを有効化してください：
+Amazon Bedrockコンソールで以下のモデルを有効化してください。
 - Claude Opus 4.1
 - Claude Sonnet 4.0
 
@@ -41,13 +41,13 @@ git push -u origin main
 ### 1.2 Amplifyアプリケーションの作成
 
 1. [AWS Amplifyコンソール](https://console.aws.amazon.com/amplify/)を開く
-2. 「新しいアプリケーション」→「アプリケーションをホスト」をクリック
-3. GitHubを選択し、認証を設定
-4. リポジトリとブランチ（main）を選択
+2. 「新しいアプリケーション」→「アプリケーションをホスト」をクリックする
+3. GitHubを選択し、認証を設定する
+4. リポジトリとブランチ（main）を選択する
 
 ### 1.3 ビルド設定の確認と修正
 
-Amplifyが自動検出したビルド設定を以下のように修正：
+Amplifyが自動検出したビルド設定を以下のように修正します。
 
 ```yaml
 version: 1
@@ -71,13 +71,13 @@ frontend:
 
 ### 1.4 環境変数の設定
 
-Amplifyコンソールの「環境変数」セクションで以下を設定：
+Amplifyコンソールの「環境変数」セクションで以下を設定します。
 
 ```
 NEXT_PUBLIC_API_URL=https://your-api-endpoint.amazonaws.com
 ```
 
-注：この値は後でBedrock AgentCoreのデプロイ後に更新します。
+なお、この値はBedrock AgentCoreのデプロイ後に更新します。
 
 ### 1.5 デプロイの実行
 
@@ -99,7 +99,7 @@ pip install bedrock-agentcore strands-agents bedrock-agentcore-starter-toolkit
 
 ### 2.2 エージェントコードの準備
 
-既存の`api.py`をAgentCore用に変換した`agent_core.py`を作成：
+既存の`api.py`をAgentCore用に変換した`agent_core.py`を作成します。
 
 ```python
 from bedrock_agentcore import BedrockAgentCoreApp
@@ -173,7 +173,7 @@ if __name__ == "__main__":
 
 ### 2.3 requirements.txtの作成
 
-`backend/requirements.txt`を作成：
+`backend/requirements.txt`を作成します。
 
 ```txt
 bedrock-agentcore
@@ -224,7 +224,7 @@ agentcore invoke '{"message": "AIエージェントの今後について教え�
 
 ### 2.6 エージェントの呼び出し
 
-デプロイ後、以下の方法でエージェントを呼び出せます：
+デプロイ後、以下の方法でエージェントを呼び出せます。
 
 ```python
 # invoke_agent.py
@@ -253,7 +253,7 @@ print(json.loads(''.join(content)))
 
 ### 2.7 エージェントの更新
 
-プロンプトやロジックを更新した場合：
+プロンプトやロジックを更新した場合は、以下のコマンドで反映します。
 
 ```bash
 # 変更をデプロイ
@@ -265,7 +265,7 @@ agentcore launch --force
 
 ### 2.8 クリーンアップ
 
-不要になったエージェントを削除する場合：
+不要になったエージェントを削除する場合は、以下のコマンドを実行します。
 
 ```bash
 # AgentCore Consoleまたは AWS SDKを使用
@@ -279,15 +279,15 @@ aws bedrock-agentcore-control delete-agent-runtime \
 ### 3.1 Amplify環境変数の更新
 
 1. Amplifyコンソールに戻る
-2. 環境変数セクションで`NEXT_PUBLIC_API_URL`を実際のAgentCoreエンドポイントに更新
-3. 再デプロイをトリガー
+2. 環境変数セクションで`NEXT_PUBLIC_API_URL`を実際のAgentCoreエンドポイントに更新する
+3. 再デプロイを実行する
 
 ### 3.2 カスタムドメインの設定（オプション）
 
 #### Amplify（フロントエンド）
-1. Amplifyコンソールで「ドメイン管理」を選択
-2. カスタムドメインを追加
-3. SSL証明書を設定
+1. Amplifyコンソールで「ドメイン管理」を選択する
+2. カスタムドメインを追加する
+3. SSL証明書を設定する
 
 ### 3.3 監視とログ
 
@@ -298,13 +298,13 @@ aws logs tail /aws/bedrock-agentcore/discussion-agents --follow
 ```
 
 #### Amplifyのログ
-Amplifyコンソールの「モニタリング」セクションでアクセスログとエラーログを確認
+Amplifyコンソールの「モニタリング」セクションで、アクセスログとエラーログを確認できます。
 
 ## パート4: エージェントのカスタマイズ
 
 ### 4.1 プロンプトの更新
 
-`backend/api.py`の各エージェントプロンプト（xxx部分）を適切な内容に更新：
+`backend/api.py`にある各エージェントのプロンプト（xxx部分）を適切な内容に更新します。
 
 ```python
 AGENT_PROMPTS = {
@@ -345,7 +345,7 @@ Generative AgentsというAIエージェント専業スタートアップのCOO�
 
 ### 4.2 再デプロイ
 
-プロンプト更新後、Dockerイメージを再ビルド・プッシュ：
+プロンプトの更新後、Dockerイメージを再ビルドしてプッシュします。
 
 ```bash
 cd backend
@@ -364,49 +364,49 @@ aws bedrock-agentcore-control update-agent-runtime \
 ### よくある問題と解決方法
 
 #### 1. Amplifyビルドエラー
-- Node.jsバージョンを確認（18以上）
-- package-lock.jsonを削除して`npm install`を再実行
+- Node.jsのバージョンが18以上か確認する
+- package-lock.jsonを削除して`npm install`を再実行する
 
 #### 2. AgentCoreデプロイエラー
-- IAMロールの権限を確認
-- Dockerイメージがlinux/arm64でビルドされているか確認
-- ECRへのpush権限を確認
+- IAMロールの権限を確認する
+- Dockerイメージがlinux/arm64でビルドされているか確認する
+- ECRへのpush権限を確認する
 
 #### 3. CORS エラー
-- FastAPIのCORS設定を確認
-- Amplify環境変数のAPI URLが正しいか確認
+- FastAPIのCORS設定を確認する
+- Amplify環境変数のAPI URLが正しいか確認する
 
 #### 4. Bedrockモデルアクセスエラー
-- Bedrockコンソールでモデルアクセスが有効になっているか確認
-- IAMロールにBedrockへのアクセス権限があるか確認
+- Bedrockコンソールでモデルアクセスが有効になっているか確認する
+- IAMロールにBedrockへのアクセス権限があるか確認する
 
 ## セキュリティのベストプラクティス
 
-1. **環境変数の管理**
-   - AWS Secrets Managerを使用して機密情報を管理
-   - 環境ごとに異なる設定を使用
+1. 環境変数の管理
+   - AWS Secrets Managerで機密情報を管理する
+   - 環境ごとに異なる設定を使う
 
-2. **ネットワークセキュリティ**
-   - VPC内でのプライベート通信を検討
-   - API Gatewayを使用してレート制限を実装
+2. ネットワークセキュリティ
+   - VPC内でのプライベート通信を検討する
+   - API Gatewayでレート制限を実装する
 
-3. **監査とロギング**
-   - CloudTrailを有効化
-   - CloudWatch Alarmsで異常を検知
+3. 監査とロギング
+   - CloudTrailを有効化する
+   - CloudWatch Alarmsで異常を検知する
 
 ## コスト最適化
 
-1. **Amplify**
-   - ビルド時間を最小化（キャッシュの活用）
-   - 不要なブランチのデプロイを削除
+1. Amplify
+   - キャッシュを活用してビルド時間を最小化する
+   - 不要なブランチのデプロイを削除する
 
-2. **Bedrock AgentCore**
-   - 適切なインスタンスサイズを選択
-   - アイドル時のスケーリング設定
+2. Bedrock AgentCore
+   - 適切なインスタンスサイズを選択する
+   - アイドル時のスケーリングを設定する
 
 ## サポート
 
-問題が発生した場合は、以下のリソースを参照してください：
+問題が発生した場合は、以下を参照してください。
 
 - [AWS Amplify Documentation](https://docs.amplify.aws/)
 - [Amazon Bedrock AgentCore Documentation](https://docs.aws.amazon.com/bedrock-agentcore/)
